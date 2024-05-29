@@ -15,7 +15,7 @@ from protocols.medicine_search import MedicineRequest
 from protocols.query_appointment import QueryAppointmentRequest
 from protocols.register_patient import RegisterPatientRequest
 from agents.user_agent import user_agent
-from agents.bureau import bureau
+from backend.bureau import bureau
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -101,27 +101,26 @@ async def medi_query(med:str):
 
 
 
-async def run_bureau():
-    bureau.run()
+# async def run_bureau():
+#     bureau.run()
 
-async def run_uvicorn():
-    port = int(os.getenv("PORT", 8000))
-    config = uvicorn.Config(app, host="0.0.0.0", port=port,reload=True)
-    server = uvicorn.Server(config)
-    await server.serve()
+# async def run_uvicorn():
+#     port = int(os.getenv("PORT", 8000))
+#     config = uvicorn.Config(app, host="0.0.0.0", port=port,reload=True)
+#     server = uvicorn.Server(config)
+#     await server.serve()
 
-if __name__ == "__main__":
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(
-        asyncio.gather(
-            run_bureau(),
-            run_uvicorn(),
-        )
-    )
+# if __name__ == "__main__":
+#     loop = asyncio.get_event_loop()
+#     loop.run_until_complete(
+#         asyncio.gather(
+#             run_bureau(),
+#             run_uvicorn(),
+#         )
+#     )
 
 # if __name__ == "__main__":
 #     port1 = int(os.getenv("PORT", 8000))
-    
 #     bureau.run()
 #     uvicorn.run(app, host="0.0.0.0", port=port1)
 
