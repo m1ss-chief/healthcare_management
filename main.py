@@ -20,7 +20,7 @@ from agents.user_agent import user_agent
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-nest_asyncio.apply()
+# nest_asyncio.apply()
 app = FastAPI()
 
 origins = [
