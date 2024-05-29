@@ -96,7 +96,7 @@ async def query_appointment(ctx: Context,sender:str, msg: QueryAppointmentReques
 @user_agent.on_message(model=QueryAppointmentResponse,replies=QueryAppointmentResponse)
 async def handle_query_response(ctx: Context, sender: str, msg: QueryAppointmentResponse):
     ctx.logger.info(f"Available slots: {msg.available_slots}")
-    resp=QueryAppointmentResponse(available_slots=msg.available_slots)
+    resp=QueryAppointmentResponse(available_slots=msg.available_slots,name=msg.name,speciality=msg.speciality)
     await ctx.send(ctx.storage.get("mysender"),resp)
 
 

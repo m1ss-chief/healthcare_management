@@ -6,6 +6,8 @@ class QueryAppointmentRequest(Model):
 
 class QueryAppointmentResponse(Model):
     available_slots: List[str]
+    name:str
+    speciality:str
 
 query_proto = Protocol()
 
@@ -13,4 +15,6 @@ query_proto = Protocol()
 async def handle_query_request(ctx: Context, sender: str, msg: QueryAppointmentRequest):
     doctors = ctx.storage.get("doctors") or {}
     slots = doctors.get(msg.doctor_id, {}).get("available_slots", [])
-    await ctx.send(sender, QueryAppointmentResponse(available_slots=slots))
+    speciality = doctors.get(msg.doctor_id, {}).get("speciality", "")
+    name = doctors.get(msg.doctor_id, {}).get("name", "")
+    await ctx.send(sender, QueryAppointmentResponse(available_slots=slots,name=name,speciality=speciality))
