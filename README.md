@@ -49,7 +49,7 @@ This Healthcare Management System is designed to handle patient registration, ap
    ```
 2. Start the uvicorn server:
    ```bash
-   uvicorn main:app --reload --host 0.0.0.0 --port 8000
+   uvicorn main:app --reload --host 0.0.0.0 
 ### Usage
 
 - **Register Patient**: Use the User Agent to register a new patient.
