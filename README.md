@@ -40,6 +40,11 @@ This Healthcare Management System is designed to handle patient registration, ap
    ```bash
    pip install -r requirements.txt
    ```
+3. Rename .env_example to .env input
+   ```bash
+   OPENAPI_KEY = <YOUR_OWN_API_KEY>
+   ```
+   You can get your own APIKEY from [here](https://aistudio.google.com/app/apikey).
 
 ### Running the Agents
 
