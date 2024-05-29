@@ -1,0 +1,63 @@
+{
+    "doctors": {
+        "1": {
+            "name": "Dr. Smith",
+            "speciality": "Cardiologist",
+            "available_slots": [
+                "9:00 AM",
+                "10:00 AM",
+                "11:00 AM"
+            ]
+        },
+        "2": {
+            "name": "Dr. Johnson",
+            "speciality": "Orthologist",
+            "available_slots": [
+                "1:00 PM",
+                "2:00 PM",
+                "3:00 PM"
+            ]
+        },
+        "3": {
+            "name": "Dr. Kapoor",
+            "speciality": "Gynecologist",
+            "available_slots": [
+                "10:30 AM",
+                "2:30 PM",
+                "4:30 PM"
+            ]
+        },
+        "4": {
+            "name": "Dr. Garcia",
+            "speciality": "Neurologist",
+            "available_slots": [
+                "8:00 AM",
+                "11:00 AM",
+                "3:00 PM"
+            ]
+        },
+        "5": {
+            "name": "Dr. Williams",
+            "speciality": "General Physician",
+            "available_slots": [
+                "9:15 AM",
+                "12:15 PM",
+                "4:15 PM"
+            ]
+        }
+    },
+    "patients": {
+        "1": {
+            "name": "john",
+            "contact": "some addr",
+            "age": 23,
+            "health_problem": "dimentis"
+        },
+        "2": {
+            "name": "john",
+            "contact": "some addr",
+            "age": 23,
+            "health_problem": "dimentis"
+        }
+    }
+}
