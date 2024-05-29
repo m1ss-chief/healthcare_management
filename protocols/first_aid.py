@@ -1,6 +1,5 @@
 import csv
 import os
-import requests
 from uagents import Agent, Context
 from uagents.setup import fund_agent_if_low
 from uagents import Model, Protocol
