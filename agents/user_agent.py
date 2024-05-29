@@ -12,6 +12,7 @@ from protocols.cancel_appointment import CancelAppointmentRequest, CancelAppoint
 
 # HEALTHCARE_AGENT_ADDRESS = "agent1qtyy2cxunv0tatsvge7keatp48mpwty57ecfgwehzsgp2yyhzlz7jze6qht"
 HEALTHCARE_AGENT_ADDRESS = healthcare_agent.address
+print(HEALTHCARE_AGENT_ADDRESS)
 FIRSR_AID_AGENT_ADDRESS = firstaid_agent.address
 MEDICINE_AID_AGENT_ADDRESS = medicine_agent.address
 
@@ -50,15 +51,16 @@ async def give_firstaid(ctx:Context,sender:str,msg:FirstAidQuery):
     # print(advice)
     # await ctx.send(sender,FirstAidResponse(advice=advice,success=True))
 
-@user_agent.on_message(FirstAidResponse)
+@user_agent.on_message(model=FirstAidResponse,replies=FirstAidResponse)
 async def handle_givefirstaid_response(ctx: Context, sender: str, msg: FirstAidResponse):
     # print(msg)
     # print(sender)
+    resp=FirstAidResponse(advice=msg.advice,success=msg.success)
     if msg.success:
         mysender=ctx.storage.get("mysender")
         print("myswnder",mysender)
         ctx.logger.info(f"{msg.advice}")
-        await ctx.send(mysender,msg)
+        await ctx.send(mysender,resp)
     else:
         ctx.logger.info("First Aid not given.")
         await ctx.send(mysender,FirstAidResponse(advice="First Aid not given.",success=True))
@@ -73,12 +75,13 @@ async def register_patient(ctx: Context,sender:str,msg:RegisterPatientRequest):
     # ctx.logger.info(request)
     await ctx.send(HEALTHCARE_AGENT_ADDRESS, request)
 
-@user_agent.on_message(RegisterPatientResponse)
+@user_agent.on_message(model=RegisterPatientResponse,replies=RegisterPatientResponse)
 async def handle_register_response(ctx: Context, sender: str, msg: RegisterPatientResponse):
+    resp=RegisterPatientResponse(patient_id=msg.patient_id,success=msg.success)
     if msg.success:
         ctx.logger.info(f"Patient registered successfully with ID: {msg.patient_id}")
         mysender=ctx.storage.get("mysender")
-        await ctx.send(mysender,msg)
+        await ctx.send(mysender,resp)
     else:
         ctx.logger.info("Patient registration failed.")
 
@@ -90,10 +93,11 @@ async def query_appointment(ctx: Context,sender:str, msg: QueryAppointmentReques
     request = QueryAppointmentRequest(doctor_id=msg.doctor_id)
     await ctx.send(HEALTHCARE_AGENT_ADDRESS, request)
 
-@user_agent.on_message(QueryAppointmentResponse)
+@user_agent.on_message(model=QueryAppointmentResponse,replies=QueryAppointmentResponse)
 async def handle_query_response(ctx: Context, sender: str, msg: QueryAppointmentResponse):
     ctx.logger.info(f"Available slots: {msg.available_slots}")
-    await ctx.send(ctx.storage.get("mysender"),msg)
+    resp=QueryAppointmentResponse(available_slots=msg.available_slots)
+    await ctx.send(ctx.storage.get("mysender"),resp)
 
 
 
@@ -105,14 +109,16 @@ async def book_appointment(ctx: Context,sender:str, msg:BookAppointmentRequest):
     request = BookAppointmentRequest(patient_id=msg.patient_id, doctor_id=msg.doctor_id, slot=msg.slot)
     await ctx.send(HEALTHCARE_AGENT_ADDRESS, request)
 
-@user_agent.on_message(BookAppointmentResponse)
+@user_agent.on_message(model=BookAppointmentResponse,replies=BookAppointmentResponse)
 async def handle_book_response(ctx: Context, sender: str, msg: BookAppointmentResponse):
+    resp=BookAppointmentResponse(success=msg.success)
     if msg.success:
+        
         ctx.logger.info("Appointment booked successfully.")
-        await ctx.send(ctx.storage.get("mysender"),msg)
+        await ctx.send(ctx.storage.get("mysender"),resp)
     else:
         ctx.logger.info("Failed to book appointment.")
-        await ctx.send(ctx.storage.get("mysender"),msg)
+        await ctx.send(ctx.storage.get("mysender"),resp)
 
 
 
@@ -123,14 +129,15 @@ async def cancel_appointment(ctx: Context,sender:str, msg:CancelAppointmentReque
     request = CancelAppointmentRequest(patient_id=msg.patient_id, doctor_id=msg.doctor_id, slot=msg.slot)
     await ctx.send(HEALTHCARE_AGENT_ADDRESS, request)
 
-@user_agent.on_message(CancelAppointmentResponse)
+@user_agent.on_message(model=CancelAppointmentResponse,replies=CancelAppointmentResponse)
 async def handle_cancel_response(ctx: Context, sender: str, msg: CancelAppointmentResponse):
+    resp=CancelAppointmentResponse(success=msg.success)
     if msg.success:
         ctx.logger.info("Appointment canceled successfully.")
-        await ctx.send(ctx.storage.get("mysender"),msg)
+        await ctx.send(ctx.storage.get("mysender"),resp)
     else:
         ctx.logger.info("Failed to cancel appointment.")
-        await ctx.send(ctx.storage.get("mysender"),msg)
+        await ctx.send(ctx.storage.get("mysender"),resp)
 
 
 ################### medicine search ##########
@@ -140,12 +147,13 @@ async def cancel_appointment(ctx: Context,sender:str, msg:MedicineRequest):
     request = MedicineRequest(medicine_name=msg.medicine_name)
     await ctx.send(MEDICINE_AID_AGENT_ADDRESS, request)
 
-@user_agent.on_message(MedicineResponse)
+@user_agent.on_message(model=MedicineResponse,replies=MedicineResponse)
 async def handle_cancel_response(ctx: Context, sender: str, msg: MedicineResponse):
     # if msg.success:
+    resp=MedicineResponse(medicine_data=msg.medicine_data)
     ctx.logger.info("Medicine data fetched successfully.")
     print(msg)
-    await ctx.send(ctx.storage.get("mysender"),msg)
+    await ctx.send(ctx.storage.get("mysender"),resp)
     # else:
     #     ctx.logger.info("Medicine data fetched appointment.")
     #     await ctx.send(ctx.storage.get("mysender"),msg)
