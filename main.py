@@ -15,7 +15,7 @@ from protocols.medicine_search import MedicineRequest
 from protocols.query_appointment import QueryAppointmentRequest
 from protocols.register_patient import RegisterPatientRequest
 from agents.user_agent import user_agent
-from backend.bureau import bureau
+# from backend.bureau import bureau
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
