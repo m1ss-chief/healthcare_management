@@ -45,8 +45,11 @@ This Healthcare Management System is designed to handle patient registration, ap
 
 1. Start all the Agents together:
    ```bash
-   python agents/bureau.py
+   python bureau.py
    ```
+2. Start the uvicorn server:
+   ```bash
+   uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ### Usage
 
 - **Register Patient**: Use the User Agent to register a new patient.
